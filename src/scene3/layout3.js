@@ -12,33 +12,33 @@
 export const YEARS = [
   {
     year: 2021,
-    key: 'Beginning',
-    lines: ['New city', 'New chapter', 'Bigger dreams'],
-  },
-  {
-    year: 2022,
-    key: 'Exploration',
-    lines: ['Learned design', 'Found direction'],
+    key: 'Foundations',
+    lines: ['SSLC Completed', 'SDA Matriculation', 'Analytical Curiosity'],
   },
   {
     year: 2023,
-    key: 'Practice',
-    lines: ['Built skills', 'Made projects', 'Kept going'],
+    key: 'HSC & B.E. CSE',
+    lines: ['HSC: 80% Scored', 'Jai Shriram Engg', 'CS Degree Begins'],
   },
   {
     year: 2024,
-    key: 'Growth',
-    lines: ['Real projects', 'Real people', 'Real learning'],
+    key: 'Research & AI',
+    lines: ['Neural Link Paper', 'NETRIX Presentation', 'Python & DSA Mastery'],
   },
   {
     year: 2025,
-    key: 'Opportunities',
-    lines: ['Collaborated', 'Solved problems', 'Stepped up'],
+    key: 'Awards & Industry',
+    lines: ['NOVA 2K25 1st Place', 'Best Project Award', 'Flutter & Python Intern'],
   },
   {
     year: 2026,
-    key: 'Next chapter',
-    lines: ['Bigger goals', 'More impact', 'Still designing'],
+    key: 'AI & Systems',
+    lines: ['CCTV Object Detection', 'LegalScanAI Platform', 'Unity 2D Runner Game'],
+  },
+  {
+    year: 2027,
+    key: 'Graduation & Vision',
+    lines: ['B.E. CSE Graduate', 'AI & Computer Vision', 'Engineering The Future'],
   },
 ];
 

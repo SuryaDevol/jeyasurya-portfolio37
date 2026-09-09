@@ -12,6 +12,7 @@ import { program, unitQuad, texture, upload, bind, loadImage } from '../gl/rende
 import { V6, F6_PLATE, F6_MAN, F6_SMOKE } from '../gl/shaders6.js';
 
 const FRAME = [1600, 900];
+export const SHOW_FINALE_MAN = false;
 
 export class Finale {
   constructor(back, glB, front, glF) {
@@ -97,7 +98,7 @@ export class Finale {
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.bindVertexArray(this.quadF);
 
-      if (s.man > 0.001) {
+      if (SHOW_FINALE_MAN && s.man > 0.001) {
         // his quad: the frame box cover-mapped, drifting a couple of pixels
         // WITH the pointer (nearer than the plate) and rising as he arrives
         const b = this.manBox;

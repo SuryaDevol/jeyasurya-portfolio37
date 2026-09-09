@@ -1,4 +1,4 @@
-// Renders GIREESH into a single coverage texture and reports the ink rectangle
+// Renders JEYASURYA into a single coverage texture and reports the ink rectangle
 // of every individual letter.
 //
 // Why a texture and not DOM text: the two people who live inside the G and the H
@@ -13,10 +13,10 @@
 // consistent with each other; per-letter fitting would distort the I into a slab
 // while squeezing the E, which is what makes lettering look counterfeit.
 
-const TEXT = 'GIREESH';
+const TEXT = 'JEYASURYA';
 
-// measured from the supplied hero artwork: ink width / cap height
-export const TARGET_RATIO = 3.121;
+// measured ratio: ink width / cap height for 9 condensed glyphs
+export const TARGET_RATIO = 3.96;
 
 function ctx2d(w, h) {
   const c = document.createElement('canvas');

@@ -57,10 +57,21 @@ export async function initGallery() {
     el.innerHTML = `<span class="g-card__in">`
       + `<img src="public/projects/${c.id}.png" alt="" `
       + `draggable="false" loading="eager" decoding="async"></span>`;
+    el.addEventListener('click', () => {
+      const projectMap = [
+        'cctv', 'runner', 'legalscan', 'guardian',
+        'neurallink', 'flutter', 'cctv', 'flutter',
+        'cctv', 'legalscan', 'cctv', 'guardian'
+      ];
+      const targetId = projectMap[i] || 'cctv';
+      if (window.highlightProject) {
+        window.highlightProject(targetId);
+      }
+    });
     deck.appendChild(el);
     return el;
   });
-  person.style.zIndex = '34';
+  person.style.display = 'none';
 
   // ---- placement -----------------------------------------------------------
   let portrait = false;

@@ -22,6 +22,7 @@ import {
 } from './shaders.js';
 
 const INK = [0.871, 0.106, 0.110];    // #DE1B1C, sampled from the artwork
+export const SHOW_HERO_FIGURE = false;
 
 export class Stage {
   constructor(canvas) {
@@ -193,7 +194,7 @@ export class Stage {
    * though he grows through the shot as he walks toward the camera.
    */
   _heroGeometry(clip, st) {
-    if (!clip || !clip.ready || st.opacity <= 0.001) return null;
+    if (!SHOW_HERO_FIGURE || !clip || !clip.ready || st.opacity <= 0.001) return null;
     const dpr = this.layout.dpr;
     const { hero } = this.layout;
     const box = clip.box();

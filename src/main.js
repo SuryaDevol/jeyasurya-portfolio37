@@ -5,7 +5,7 @@
 // starts and the figure pops in three frames later. Nothing is revealed until
 // everything needed for the first eight seconds is in hand.
 
-import { Stage } from './gl/stage.js';
+import { Stage, SHOW_HERO_FIGURE } from './gl/stage.js';
 import { Clip } from './lib/clip.js';
 import { computeLayout } from './scene/layout.js';
 import { buildWord, fontsReady } from './scene/type.js';
@@ -15,6 +15,7 @@ import { damp, clamp } from './lib/ease.js';
 import { initUniverse } from './scene2/boot2.js';
 import { initChrono } from './scene3/boot3.js';
 import { initGallery } from './scene4/boot4.js';
+import { initDossier } from './scene4/dossier.js';
 import { initFinale } from './scene6/boot6.js';
 
 // a cinematic page manages its own positions; the browser restoring an old
@@ -60,7 +61,7 @@ async function main() {
     return degrade('media manifest missing');
   }
 
-  const steps = 4;
+  const steps = SHOW_HERO_FIGURE ? 4 : 3;
   let done = 0;
   const tick = () => { bootFill.style.width = `${(++done / steps) * 100}%`; };
 
@@ -74,41 +75,51 @@ async function main() {
     }).then(tick),
   ]);
 
-  const mk = (name, loopFade) => {
-    const c = manifest.clips[name];
-    return new Clip({
-      src: [
-        { url: MEDIA + c.webm, type: 'video/webm' },
-        { url: MEDIA + c.mp4, type: 'video/mp4' },
-      ],
-      poster: MEDIA + c.poster,
-      w: c.w, h: c.h, track: c.track, loopFade,
-    });
-  };
-  app.clips.hero = mk('hero', 0.7);
+  if (SHOW_HERO_FIGURE) {
+    const mk = (name, loopFade) => {
+      const c = manifest.clips[name];
+      return new Clip({
+        src: [
+          { url: MEDIA + c.webm, type: 'video/webm' },
+          { url: MEDIA + c.mp4, type: 'video/mp4' },
+        ],
+        poster: MEDIA + c.poster,
+        w: c.w, h: c.h, track: c.track, loopFade,
+      });
+    };
+    app.clips.hero = mk('hero', 0.7);
+  } else {
+    app.clips.hero = null;
+  }
 
   layout();
   window.addEventListener('resize', debounce(layout, 140));
   window.addEventListener('orientationchange', () => setTimeout(layout, 220));
 
-  await app.clips.hero.whenReady();
+  if (SHOW_HERO_FIGURE && app.clips.hero) {
+    await app.clips.hero.whenReady();
+  }
   tick();
 
   const held = performance.now() - startedAt;
   if (held < MIN_BLACK) await wait(MIN_BLACK - held);
 
-  const playing = await app.clips.hero.play();
+  let playing = true;
+  if (SHOW_HERO_FIGURE && app.clips.hero) {
+    playing = await app.clips.hero.play();
+  }
 
   // the later scenes build while the hero plays, so scrolling into them is
   // instant; each one runs only while it is actually on screen
   initUniverse().then((u) => { app.universe = u; })
-    .catch((e) => console.warn('[gireesh] universe unavailable:', e.message));
+    .catch((e) => console.warn('[jeyasurya] universe unavailable:', e.message));
   initChrono().then((c) => { app.chrono = c; })
-    .catch((e) => console.warn('[gireesh] chrono unavailable:', e.message));
+    .catch((e) => console.warn('[jeyasurya] chrono unavailable:', e.message));
   initGallery().then((g) => { app.gallery = g; })
-    .catch((e) => console.warn('[gireesh] gallery unavailable:', e.message));
+    .catch((e) => console.warn('[jeyasurya] gallery unavailable:', e.message));
+  initDossier();
   initFinale().then((f) => { app.finale = f; })
-    .catch((e) => console.warn('[gireesh] finale unavailable:', e.message));
+    .catch((e) => console.warn('[jeyasurya] finale unavailable:', e.message));
 
   if (!playing) return awaitGesture();
   begin();
@@ -233,14 +244,14 @@ function frame(now) {
 // --------------------------------------------------------------------------
 
 function degrade(reason) {
-  console.warn('[gireesh] falling back:', reason);
+  console.warn('[jeyasurya] falling back:', reason);
   root.classList.remove('is-booting');
   root.classList.add('is-fallback');
   boot.classList.add('is-done');
   for (const [, name] of CUES) root.classList.add(`is-${name}`);
   document.querySelector('.stage-wrap').insertAdjacentHTML('afterbegin',
-    '<div class="fallback"><p>GIREESH</p>'
-    + '<small>Welcome to my world</small></div>');
+    '<div class="fallback"><p>JEYASURYA</p>'
+    + '<small>Computer Science Engineer · AI & Computer Vision Developer</small></div>');
 }
 
 function renderStill() {

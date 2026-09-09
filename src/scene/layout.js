@@ -2,7 +2,7 @@
 //
 // Every constant here was measured off the supplied hero artwork rather than
 // eyeballed, so the live page keeps the reference's proportions exactly:
-//   GIREESH ink box   x 3.31% .. 96.75%,  cap top 27.00%, baseline 80.22%
+//   JEYASURYA ink box   x 3.31% .. 96.75%,  cap top 27.00%, baseline 80.22%
 //   WELCOME strip     centred, y 20.44%
 //   LEGEND chip       x 88.12%, y 26.78%, 10.38% x 4.22%
 //   ARTIST chip       x  1.50%, y 68.78%, 15.00% x 3.67%
@@ -73,9 +73,8 @@ export function computeLayout(w, h) {
     narrow,
     word,
     hero: { h: heroH, cx, feet },
-    // clear of the header band and clear of his head; it renders in front of
-    // the typography, so it stays readable wherever it lands
-    welcomeY: portrait ? (feet - heroH) - h * 0.075 : h * 0.175,
+    // clear of the header band; sits above the wordmark
+    welcomeY: portrait ? Math.max(h * 0.11, capTop - h * 0.075) : h * 0.175,
     legend: portrait
       ? { x: w * 0.955, y: capTop - h * 0.052, h: 20, alignRight: true }
       : { x: w * REF.legend.x, y: h * REF.legend.y,

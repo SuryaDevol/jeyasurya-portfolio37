@@ -31,6 +31,8 @@ import { fitScene, angleAt, YEARS } from './layout3.js';
 import { sample3 } from './timeline3.js';
 import { damp, clamp, lerp } from '../lib/ease.js';
 
+export const SHOW_CHRONO_FIGURE = false;
+
 export class Chrono {
   constructor(canvas, gl, front = null) {
     this.canvas = canvas;
@@ -287,7 +289,7 @@ export class Chrono {
     }
 
     g.blendFunc(g.ONE, g.ONE_MINUS_SRC_ALPHA);
-    {
+    if (SHOW_CHRONO_FIGURE) {
       const pr = progs.figure;
       g.useProgram(pr.p);
       const fh = L.figure.h * this.dpr;

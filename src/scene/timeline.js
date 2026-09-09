@@ -7,7 +7,7 @@
 //
 //   0.0  black
 //   0.3  the figure condenses out of the dark and walks in
-//   2.1  GIREESH materialises, centre letters first, so the type grows around him
+//   2.1  JEYASURYA materialises, centre letters first, so the type grows outward
 //   2.9  WELCOME TO MY WORLD drops from above and overshoots
 //   3.2  the chips arrive from the left and the right
 //   3.5  arrows and the corner dot grid tick into place
