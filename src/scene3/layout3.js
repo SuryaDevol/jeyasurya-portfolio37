@@ -9,38 +9,9 @@
 // for, so the maths the scene is drawn with and the maths it is read with are
 // the same maths.
 
-export const YEARS = [
-  {
-    year: 2021,
-    key: 'Foundations',
-    lines: ['SSLC Completed', 'SDA Matriculation', 'Analytical Curiosity'],
-  },
-  {
-    year: 2023,
-    key: 'HSC & B.E. CSE',
-    lines: ['HSC: 80% Scored', 'Jai Shriram Engg', 'CS Degree Begins'],
-  },
-  {
-    year: 2024,
-    key: 'Research & AI',
-    lines: ['Neural Link Paper', 'NETRIX Presentation', 'Python & DSA Mastery'],
-  },
-  {
-    year: 2025,
-    key: 'Awards & Industry',
-    lines: ['NOVA 2K25 1st Place', 'Best Project Award', 'Flutter & Python Intern'],
-  },
-  {
-    year: 2026,
-    key: 'AI & Systems',
-    lines: ['CCTV Object Detection', 'LegalScanAI Platform', 'Unity 2D Runner Game'],
-  },
-  {
-    year: 2027,
-    key: 'Graduation & Vision',
-    lines: ['B.E. CSE Graduate', 'AI & Computer Vision', 'Engineering The Future'],
-  },
-];
+import { TIMELINE_MILESTONES as YEARS } from '../data/portfolio_data.js';
+
+export { YEARS };
 
 // measured in the 1280x720 reference, stored as fractions of the frame
 const REF = {

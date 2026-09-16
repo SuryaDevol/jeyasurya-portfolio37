@@ -95,8 +95,8 @@
   max-width: 1280px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 28px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr));
+  gap: clamp(16px, 2.4vw, 28px);
 }
 
 .p-card {
@@ -264,14 +264,18 @@
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  padding: 8px 14px;
+  padding: 10px 16px;
+  min-height: 44px;
+  box-sizing: border-box;
   border-radius: 4px;
   cursor: pointer;
   text-decoration: none;
   transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
+  touch-action: manipulation;
 }
 
 .p-btn--primary {
@@ -342,20 +346,24 @@
 
 .hud-modal__close {
   position: absolute;
-  top: 16px;
-  right: 18px;
-  background: none;
+  top: 14px;
+  right: 14px;
+  background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #c9c1b9;
-  border-radius: 4px;
-  width: 32px;
-  height: 32px;
+  border-radius: 6px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 22px;
   cursor: pointer;
   transition: all 0.25s ease;
+  touch-action: manipulation;
+  z-index: 10;
 }
 
 .hud-modal__close:hover {
@@ -417,8 +425,53 @@
   color: var(--ink-hot);
 }
 
-@media (max-width: 640px) {
+body.modal-open {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+@media (max-width: 768px) {
+  .dossier {
+    padding: clamp(50px, 8vh, 80px) clamp(14px, 3.5vw, 24px);
+  }
+
+  .dossier__filters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 10px;
+    margin-right: -14px;
+    padding-right: 14px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dossier__btn-tab {
+    white-space: nowrap;
+    padding: 10px 16px;
+    min-height: 40px;
+    touch-action: manipulation;
+  }
+
   .dossier__grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .p-card {
+    padding: 22px 18px;
+  }
+
+  .hud-modal {
+    padding: 12px;
+  }
+
+  .hud-modal__box {
+    padding: 24px 18px;
+    max-height: 90vh;
+  }
+
+  .hud-modal__arch {
+    font-size: 11.5px;
+    padding: 12px;
+    overflow-x: auto;
   }
 }

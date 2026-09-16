@@ -193,17 +193,43 @@ function layout() {
 }
 
 function bindPointer() {
-  if (reduced || matchMedia('(pointer: coarse)').matches) return;
-  window.addEventListener('pointermove', (e) => {
-    // normalised to -1..1, then damped in the frame loop; the response is
-    // deliberately small — depth, not a toy
-    app.pointer.tx = (e.clientX / window.innerWidth) * 2 - 1;
-    app.pointer.ty = (e.clientY / window.innerHeight) * 2 - 1;
-  }, { passive: true });
-  window.addEventListener('pointerleave', () => {
-    app.pointer.tx = 0;
-    app.pointer.ty = 0;
-  });
+  if (reduced) return;
+
+  if (!matchMedia('(pointer: coarse)').matches) {
+    window.addEventListener('pointermove', (e) => {
+      app.pointer.tx = (e.clientX / window.innerWidth) * 2 - 1;
+      app.pointer.ty = (e.clientY / window.innerHeight) * 2 - 1;
+    }, { passive: true });
+    window.addEventListener('pointerleave', () => {
+      app.pointer.tx = 0;
+      app.pointer.ty = 0;
+    });
+  } else {
+    // Mobile touch interaction
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches.length > 0) {
+        const touch = e.touches[0];
+        app.pointer.tx = (touch.clientX / window.innerWidth) * 2 - 1;
+        app.pointer.ty = (touch.clientY / window.innerHeight) * 2 - 1;
+      }
+    }, { passive: true });
+    window.addEventListener('touchend', () => {
+      app.pointer.tx = 0;
+      app.pointer.ty = 0;
+    }, { passive: true });
+
+    // Subtle device tilt on mobile
+    if (typeof window !== 'undefined' && window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', (e) => {
+        if (e.gamma !== null && e.beta !== null) {
+          const tiltX = Math.max(-1, Math.min(1, e.gamma / 35));
+          const tiltY = Math.max(-1, Math.min(1, (e.beta - 45) / 35));
+          app.pointer.tx = tiltX * 0.6;
+          app.pointer.ty = tiltY * 0.6;
+        }
+      }, { passive: true });
+    }
+  }
 }
 
 let last = 0;

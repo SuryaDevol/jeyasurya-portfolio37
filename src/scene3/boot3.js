@@ -139,6 +139,29 @@ export async function initChrono() {
 
   section.addEventListener('pointerleave', () => { chrono.pointer.inside = false; });
 
+  // Mobile touch swipe & drag handling
+  let touchStartX = 0;
+  let touchStartY = 0;
+  section.addEventListener('touchstart', (e) => {
+    if (!e.touches.length) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  section.addEventListener('touchend', (e) => {
+    if (!e.changedTouches.length) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+      const current = Math.round(chrono.timeline.target);
+      if (dx < 0 && current < YEARS.length - 1) {
+        setTarget(current + 1);
+      } else if (dx > 0 && current > 0) {
+        setTarget(current - 1);
+      }
+    }
+  }, { passive: true });
+
   // touch and keyboard: a card is a real button, so both come almost free
   cards.forEach((el, i) => {
     el.addEventListener('pointerenter', () => { if (!coarseMQ.matches) setTarget(i); });
